@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Project</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            color: #6a1b9a;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto; /* Enable scrolling if needed */
+        }
+
+
+        h1 {
+            font-size: calc(1.5rem + 0.8vw); /* Responsive font size */
+            font-weight: bold;
+            color: #e91e63;
+            text-shadow: 3px 3px rgba(255, 128, 171, 0.7);
+            word-wrap: break-word;
+            line-height: 1.5; /* Ensures proper spacing */
+            margin: 10px 0; /* Adds margin for better spacing */
+        }
+
+        .highlighted {
+            font-size: calc(2rem + 1vw); /* Responsive font size */
+            font-weight: bold;
+            color: #d32f2f;
+            line-height: 1.5;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: calc(1rem + 0.3vw);
+            color: white;
+            background-color: #f06292;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            margin: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background-color: #ec407a;
+        }
+
+        #countdown {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #d81b60;
+            margin-top: 20px;
+            word-wrap: break-word;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            background-color: #ff6f91;
+            transform: rotate(-45deg);
+            animation: floatAround 15s infinite;
+            opacity: 0.8;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6f91;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            animation: floatAround 20s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatAround {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(30px, -20px) rotate(45deg);
+            }
+            50% {
+                transform: translate(-20px, 30px) rotate(90deg);
+            }
+            75% {
+                transform: translate(-30px, -10px) rotate(135deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: calc(2rem + 2vw);
+            }
+
+            button {
+                font-size: calc(0.9rem + 0.3vw);
+            }
+
+            #countdown {
+                font-size: 3rem;
+                margin-top: 15px;
+            }
+
+            .heart {
+                width: 15px;
+                height: 15px;
+            }
+
+            .heart:before, .heart:after {
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: calc(1.5rem + 1.5vw);
+            }
+
+            button {
+                font-size: calc(0.8rem + 0.3vw);
+            }
+
+            #countdown {
+                font-size: 2.5rem;
+            }
+
+            .heart {
+                width: 12px;
+                height: 12px;
+            }
+
+            .heart:before, .heart:after {
+                width: 12px;
+                height: 12px;
+            }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: calc(1.2rem + 0.8vw);
+            }
+
+            .highlighted {
+                font-size: calc(1.5rem + 1vw);
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: calc(1rem + 0.8vw);
+            }
+
+            .highlighted {
+                font-size: calc(1.2rem + 1vw);
+            }
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+        @keyframes countdownEffect {
+            0% { color: #d81b60; }
+            50% { color: #e91e63; }
+            100% { color: #f06292; }
+        }
+        #no-button {
+            position: relative;
+        }
+
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
+</head>
+<body>
+    <div class="floating-elements" id="background-elements"></div>
+
+    <div class="container" id="first-page">
+        <h1>Hello There,<br>Looking for Something Special Ah???</h1>
+        <button onclick="navigateToPage('second-page')">Yeahhh</button>
+    </div>
+
+    <div class="container" id="second-page" style="display: none;">
+        <h1>The Big Moment is Almost Here.<br>Be Ready.</h1>
+        <div id="countdown">5</div>
+    </div>
+
+    <div class="container" id="third-page" style="display: none;">
+        <h1>Hello My Love🤍...<br>
+            I know this is a little late, but I just wanted to find the perfect moment.<br>
+            Now, I'm ready to ask you something that's been on my heart.<br>
+            <span class="highlighted">Will you be my Valentine?🥹</span>
+        </h1>
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute animated illustration">
+        <div style="display: flex; gap: 20px; justify-content: center; align-items: center;">
+            <button onclick="navigateToPage('final-page')">Yes</button>
+            <button id="no-button">No</button>
+        </div>
+    </div>
+
+    <div class="container" id="final-page" style="display: none;">
+        <h1>Hurray!!!<br>Finally, I Got a Valentine ❤️</h1>
+        <img src="https://media0.giphy.com/media/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Cute animated illustration">
+    </div>
+
+    <script>
+        function navigateToPage(pageId) {
+            document.querySelectorAll('.container').forEach(page => page.style.display = 'none');
+            document.getElementById(pageId).style.display = 'flex';
+
+            if (pageId === 'second-page') {
+                startCountdown();
+            } else if (pageId === 'final-page') {
+                celebrate();  // Call the confetti function
+            }
+        }
+
+        function celebrate() {
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+        }
+
+
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            let countdownValue = 5;
+
+            countdownElement.style.animation = 'countdownEffect 1s infinite'; // Add color animation
+
+            const interval = setInterval(() => {
+            countdownElement.textContent = countdownValue;
+            countdownValue--;
+
+            if (countdownValue < 0) {
+                clearInterval(interval);
+                navigateToPage('third-page');
+            }
+            }, 1000);
+        }
+
+
+        const floatingContainer = document.getElementById('background-elements');
+
+        for (let i = 0; i < 10; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.top = `${Math.random() * 100}%`;
+            heart.style.animationDuration = `${Math.random() * 5 + 15}s`;
+            floatingContainer.appendChild(heart);
+        }
+
+        for (let i = 0; i < 8; i++) {
+            const circle = document.createElement('div');
+            circle.classList.add('circle');
+            circle.style.width = `${Math.random() * 40 + 20}px`;
+            circle.style.height = circle.style.width; // Ensure perfect circle
+            circle.style.left = `${Math.random() * 100}%`;
+            circle.style.top = `${Math.random() * 100}%`;
+            circle.style.animationDuration = `${Math.random() * 5 + 20}s`;
+            floatingContainer.appendChild(circle);
+        }
+
+        const noButton = document.getElementById('no-button');
+
+        function moveNoButton() {
+            const x = Math.random() * (window.innerWidth - noButton.clientWidth); 
+            const y = Math.random() * (window.innerHeight - noButton.clientHeight);
+            noButton.style.position = 'absolute';
+            noButton.style.top = `${y}px`;
+            noButton.style.left = `${x}px`;
+            noButton.style.transition = 'top 0.3s ease-in-out, left 0.3s ease-in-out';
+        }
+
+        // Handle both hover (for desktop) and touch (for mobile)
+        noButton.addEventListener('mouseover', moveNoButton);
+        noButton.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevents default tap behavior
+            moveNoButton();
+        });
+
+
+    </script>
+</body>
+</html>
